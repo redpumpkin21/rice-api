@@ -3,12 +3,7 @@ const router = require('express').Router()
 const Rice = require('../models/Rice')
 
 router.get('/', async(req, res) => {
-    try{
-       const rice = await Rice.find({})
-       res.json(rice)
-    } catch(error){
-        res.status(400).json(error)
-    }
+   res.json(await Rice.find({}).catch((err) => res.status(400).json(err)))
 })
 
 router.post('/', async(req,res) => {
@@ -23,7 +18,7 @@ router.post('/', async(req,res) => {
 router.put('/:id', async(req, res) => {
     try{
     const updatedRice = await Rice.findByIdAndUpdate(
-        req.params.findByIdAndUpdate,
+        req.params.id,
         req.body,
         {new: true}
     )
